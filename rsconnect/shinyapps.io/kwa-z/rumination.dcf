@@ -1,0 +1,13 @@
+name: rumination
+title: rumination
+username:
+account: kwa-z
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 4700759
+bundleId: 5057076
+url: https://k-bak.shinyapps.io/rumination/
+when: 1632248727.13274
+lastSyncTime: 1632248727.13274
+asMultiple: FALSE
+asStatic: FALSE
