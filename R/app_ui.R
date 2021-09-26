@@ -1,3 +1,5 @@
+library(shinydashboard)
+
 #' The application User-Interface
 #' 
 #' @param request Internal parameter for `{shiny}`. 
@@ -5,15 +7,39 @@
 #' @import shiny
 #' @noRd
 app_ui <- function(request) {
-  tagList(
-    # Leave this function for adding external resources
-    golem_add_external_resources(),
-    # Your application UI logic 
-    fluidPage(
-      h1("rumination"),
-      mod_summary_ui("summary_ui_1")
+  
+  # Leave this function for adding external resources
+  golem_add_external_resources()
+  
+  shinydashboard::dashboardPage(
+    dashboardHeader(title = "Rumination"),
+    dashboardSidebar(
+      
+      sidebarMenu(
+        menuItem("Udvikling", tabName = "dashboard", icon = icon("dashboard")),
+        menuItem("Upload data", tabName = "Upload", icon = icon("th"))
+      )
+      
+    ),
+    
+    dashboardBody(
+      tabItems(
+        # First tab content
+        tabItem(tabName = "dashboard",
+                
+                mod_summary_ui("summary_ui_1")
+                
+        ),
+        
+        # Second tab content
+        tabItem(tabName = "Upload",
+                mod_upload_ui("upload_ui_1")
+        )
+      )
     )
+    
   )
+  
 }
 
 #' Add external Resources to the Application

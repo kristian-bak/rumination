@@ -4,13 +4,20 @@
 \alias{plot_question}
 \title{Plot question}
 \usage{
-plot_question(data = construct_data(p = 17), str_question = "neg_mind")
+plot_question(
+  data = construct_data(p = 17),
+  str_question = "neg_mind",
+  str_patient = "1"
+)
 }
 \arguments{
 \item{data}{tibble returned from construct_data(p = 17)}
 
 \item{str_question}{string specifying which question to plot 
 ("neg_mind", "pos_mind", "old_strategy" or "new_strategy")}
+
+\item{str_patient}{string specifying which patient (= Deltager) to extract
+"1", "2", ..., "10", "Gennemsnit" or "Alle")}
 }
 \value{
 plotly object

@@ -6,6 +6,8 @@
 #' @noRd
 app_server <- function( input, output, session ) {
   
-  mod_summary_server("summary_ui_1")
+  file_input <- mod_upload_server("upload_ui_1")
+  
+  mod_summary_server(id = "summary_ui_1", file_input = file_input)
   
 }

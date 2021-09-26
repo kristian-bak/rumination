@@ -32,17 +32,23 @@ get_random_data <- function(data_pmap, p) {
 #' @export
 construct_data <- function(p = 17) {
   
-  data <- tibble::tibble(Deltager = rep(1:10, each = 8), 
+  data <- tibble::tibble(Deltager = rep(1:10, each = 8) %>% as.factor(), 
                  Uge = rep(1:8, 10))
   
   data_pmap <- data %>% 
-    dplyr::mutate(n = 1, sd = 1) %>% 
-    dplyr::rename(mean = Uge) %>% 
+    dplyr::mutate(n = 1, mean = rev(Uge), sd = 1) %>% 
     dplyr::select(n, mean, sd)
   
   questions <- get_random_data(data_pmap = data_pmap, p = p)
   
   data <- dplyr::bind_cols(data, questions)
+  
+  data <- data %>% 
+    dplyr::mutate(
+      neg_mind = (Spørgsmål_2 + Spørgsmål_3 + Spørgsmål_4 + Spørgsmål_5) / 4, 
+      pos_mind = (Spørgsmål_6 + Spørgsmål_7 + Spørgsmål_8 + Spørgsmål_9 + Spørgsmål_10) / 5, 
+      old_strategy = (Spørgsmål_11 + Spørgsmål_12 + Spørgsmål_13) / 3, 
+      new_strategy = (Spørgsmål_14 + Spørgsmål_15 + Spørgsmål_16 + Spørgsmål_17) / 4)
   
   return(data)
   
