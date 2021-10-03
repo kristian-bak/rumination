@@ -9,6 +9,7 @@
 map_question <- function(x) {
   
   switch(x, 
+         "Spørgsmål 1"                           = "question_1",
          "Negativ metakognitive overbevisninger" = "neg_mind", 
          "Positiv metakognitive overbevisninger" = "pos_mind", 
          "Gamle strategier"                      = "old_strategy", 
@@ -32,6 +33,7 @@ get_plot_data <- function(data, var_names) {
   out <- data %>% 
     dplyr::group_by(dplyr::across(var_names)) %>% 
     dplyr::summarise(
+      question_1 = mean(Spørgsmål_1),
       neg_mind = mean(neg_mind), 
       pos_mind = mean(pos_mind), 
       old_strategy = mean(old_strategy), 

@@ -7,7 +7,7 @@
 get_random_vector(data_pmap)
 }
 \arguments{
-\item{data_pmap}{data.frame with arguments for rnorm to pmap through}
+\item{data_pmap}{a tibble with parameters to pmap through rnorm}
 }
 \description{
 Get random vector

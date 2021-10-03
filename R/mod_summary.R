@@ -14,7 +14,8 @@ mod_summary_ui <- function(id){
       column(4, 
              shiny::selectInput(inputId = ns("select_question"), 
                                 label = "Spørgsmål", 
-                                choices = c("Negativ metakognitive overbevisninger", 
+                                choices = c("Spørgsmål 1", 
+                                            "Negativ metakognitive overbevisninger", 
                                             "Positiv metakognitive overbevisninger", 
                                             "Gamle strategier", 
                                             "Nye strategier")
@@ -33,7 +34,13 @@ mod_summary_ui <- function(id){
              )
       ),
     fluidRow(
-      downloadButton(outputId = ns("download_data"), label = "Download data")
+      downloadButton(
+        outputId = ns("download_data"), 
+        label = "Download data"),
+      checkboxInput(
+        inputId = ns("tick_template"), 
+        label = "Download skabelon", 
+        value = FALSE)
     )
   )
 }
@@ -55,7 +62,7 @@ mod_summary_server <- function(id, file_input) {
         
       } else {
         
-        react_var$input_data <- construct_data(p = 17)
+        react_var$input_data <- construct_data()
         
       }
       
@@ -71,8 +78,26 @@ mod_summary_server <- function(id, file_input) {
 
     })
     
+    observe({
+      
+      print(input$tick_template)
+      
+      if (input$tick_template) {
+        data_out <- create_template(data = react_var$input_data)
+        browser()
+        print("Skabalon")
+      } else {
+        data_out <- react_var$input_data
+        print("Nope")
+      }
+      
+      react_var$data_to_download <- data_out %>% 
+        dplyr::select(-neg_mind, -pos_mind, -old_strategy, -new_strategy)
+      
+    })
+    
     output$download_data <- download_excel(
-      data = react_var$input_data, 
+      data = react_var$data_to_download, 
       file_name = "Rumination.xlsx"
     )
  

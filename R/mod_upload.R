@@ -38,6 +38,18 @@ mod_upload_server <- function(id){
       var_needed <- c("Deltager", "Uge", 
                       paste0("Spørgsmål_", 1:17))
       
+      is_numeric <- sapply(X = var_needed[-1], FUN = function(x) {is.numeric(data[[x]])})
+      
+      if (!all(is_numeric)) {
+        showNotification(
+          ui = "Mindst en af søjlerne: Uge, Spørgsmål_1, Spørgsmål_2, ..., Spørgsmål_17 indeholder karaktertegn. Søjlerne bør være udelukkende numeriske", 
+          duration = 7, 
+          type = "error"
+        )
+        return(NULL)
+      }
+      
+      
       if (!all(var_needed %in% names(data))) {
         showNotification(
           ui = "Forkert excel fil. Data bør indeholder søjlerne Deltager, Uge, Spørgsmål_1, Spørgsmål_2, ..., Spørgsmål_17", 
@@ -48,6 +60,15 @@ mod_upload_server <- function(id){
       }
       
       react_var$data <- data
+      
+      ## Using a sleeper to prevent eyes from getting confused
+      Sys.sleep(0.6)
+      
+      showNotification(
+        ui = "Graferne er nu lavet med dine data", 
+        duration = 10, 
+        type = "message"
+      )
       
     })
     

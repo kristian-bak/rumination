@@ -4,10 +4,12 @@
 \alias{get_random_data}
 \title{Get random data}
 \usage{
-get_random_data(data_pmap, p)
+get_random_data(data, trend, p)
 }
 \arguments{
-\item{data_pmap}{data.frame with arguments for rnorm to pmap through}
+\item{data}{tibble with Uge column}
+
+\item{trend}{string specifying which simulate_data function to use('linear decrease', 'unchanged', 'convex decrease' or 'concave decrease')}
 
 \item{p}{number of predictors}
 }

@@ -4,13 +4,10 @@
 \alias{construct_data}
 \title{Construct data}
 \usage{
-construct_data(p = 17)
-}
-\arguments{
-\item{p}{number of predictors. Default is 17.}
+construct_data()
 }
 \value{
-tibble with columns Deltager, Uge and simulated answers for predictors 1:p
+tibble with columns Deltager, Uge and simulated answers for predictors 1:17
 }
 \description{
 Construct data
