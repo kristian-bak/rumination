@@ -162,6 +162,9 @@ construct_data <- function() {
       old_strategy = (Spørgsmål_11 + Spørgsmål_12 + Spørgsmål_13) / 3, 
       new_strategy = (Spørgsmål_14 + Spørgsmål_15 + Spørgsmål_16 + Spørgsmål_17) / 4)
   
+  data <- data %>% 
+    dplyr::arrange(Uge, Deltager)
+  
   return(data)
   
 }

@@ -21,12 +21,11 @@ create_template <- function(data) {
 #' Download excel
 #' @param data data to download
 #' @param file_name file name including extension. Should be .xlsx
-#' This means all questions will be overwritten to NA. Default is FALSE. 
-#' @return excel file
+#' @return Downloaded file
 #' @export
 #' 
 download_excel <- function(data, file_name) {
-  
+
   shiny::downloadHandler(
     filename = file_name,
     content = function(file) {

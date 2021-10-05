@@ -9,11 +9,10 @@ download_excel(data, file_name)
 \arguments{
 \item{data}{data to download}
 
-\item{file_name}{file name including extension. Should be .xlsx
-This means all questions will be overwritten to NA. Default is FALSE.}
+\item{file_name}{file name including extension. Should be .xlsx}
 }
 \value{
-excel file
+Downloaded file
 }
 \description{
 Download excel

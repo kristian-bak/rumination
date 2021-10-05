@@ -15,6 +15,8 @@ app_ui <- function(request) {
     dashboardHeader(title = "Rumination"),
     dashboardSidebar(
       
+      show_version_number(),
+      
       sidebarMenu(
         menuItem("Udvikling", tabName = "dashboard", icon = icon("dashboard")),
         menuItem("Upload data", tabName = "Upload", icon = icon("th"))

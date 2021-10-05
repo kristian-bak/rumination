@@ -14,7 +14,7 @@ mod_summary_ui <- function(id){
       column(4, 
              shiny::selectInput(inputId = ns("select_question"), 
                                 label = "Spørgsmål", 
-                                choices = c("Spørgsmål 1", 
+                                choices = c("Mængden af grublerier/bekymringer", 
                                             "Negativ metakognitive overbevisninger", 
                                             "Positiv metakognitive overbevisninger", 
                                             "Gamle strategier", 
@@ -34,13 +34,16 @@ mod_summary_ui <- function(id){
              )
       ),
     fluidRow(
-      downloadButton(
-        outputId = ns("download_data"), 
-        label = "Download data"),
-      checkboxInput(
-        inputId = ns("tick_template"), 
-        label = "Download skabelon", 
-        value = FALSE)
+      column(2, 
+             downloadButton(
+               outputId = ns("download_data"), 
+               label = "Download data")
+             ),
+      column(2, 
+             downloadButton(
+               outputId = ns("download_template"), 
+               label = "Download skabelon")
+             )
     )
   )
 }
@@ -66,6 +69,11 @@ mod_summary_server <- function(id, file_input) {
         
       }
       
+      var_questions <- paste0("Spørgsmål_", 1:17)
+      
+      react_var$data_to_download <- react_var$input_data %>% 
+        dplyr::select(c("Deltager", "Uge", var_questions))
+      
     })
     
     output$plot_summary <- plotly::renderPlotly({
@@ -78,26 +86,13 @@ mod_summary_server <- function(id, file_input) {
 
     })
     
-    observe({
-      
-      print(input$tick_template)
-      
-      if (input$tick_template) {
-        data_out <- create_template(data = react_var$input_data)
-        browser()
-        print("Skabalon")
-      } else {
-        data_out <- react_var$input_data
-        print("Nope")
-      }
-      
-      react_var$data_to_download <- data_out %>% 
-        dplyr::select(-neg_mind, -pos_mind, -old_strategy, -new_strategy)
-      
-    })
-    
     output$download_data <- download_excel(
       data = react_var$data_to_download, 
+      file_name = "Rumination.xlsx"
+    )
+    
+    output$download_template <- download_excel(
+      data = create_template(data = react_var$data_to_download), 
       file_name = "Rumination.xlsx"
     )
  

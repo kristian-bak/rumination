@@ -35,6 +35,9 @@ golem::add_utils("notin")
 ## Add pipe operator
 usethis::use_pipe()
 
+## Bump version number
+usethis::use_version()
+
 ## External resources
 ## Creates .js and .css files at inst/app/www
 golem::add_js_file( "script" )

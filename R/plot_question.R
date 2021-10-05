@@ -9,7 +9,7 @@
 map_question <- function(x) {
   
   switch(x, 
-         "Spørgsmål 1"                           = "question_1",
+         "Mængden af grublerier/bekymringer"     = "question_1",
          "Negativ metakognitive overbevisninger" = "neg_mind", 
          "Positiv metakognitive overbevisninger" = "pos_mind", 
          "Gamle strategier"                      = "old_strategy", 
