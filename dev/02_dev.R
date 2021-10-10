@@ -20,6 +20,7 @@ usethis::use_package("plotly")
 usethis::use_package("dplyr")
 usethis::use_package("xlsx")
 usethis::use_package("shinydashboard")
+usethis::use_package("readxl")
 
 ## Add modules ----
 ## Create a module infrastructure in R/

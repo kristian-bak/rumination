@@ -1,6 +1,6 @@
 Package: rumination
 Title: An Amazing Shiny App
-Version: 1.0.0
+Version: 1.1.0
 Authors@R: 
     person(given = "firstname",
            family = "lastname",
@@ -15,6 +15,7 @@ Imports:
     magrittr,
     pkgload,
     plotly,
+    readxl,
     shiny (>= 1.6.0),
     shinydashboard,
     xlsx
