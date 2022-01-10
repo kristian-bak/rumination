@@ -26,6 +26,17 @@ mod_summary_ui <- function(id){
                                 label = "Deltager",
                                 choices = c(1:10, "Gennemsnit", "Alle")
              )
+      ), 
+      column(3, 
+             shinyWidgets::awesomeCheckboxGroup(
+               inputId = ns("switch_na_to_zero"), 
+               label = "Erstat blanke celler med 0", 
+               choices = c("Ja"), 
+               selected = "Ja", 
+               inline = TRUE, 
+               status = "primary" 
+             ), 
+             style = "display:inline-block; float:left"
       )
     ),
     fluidRow(
@@ -61,11 +72,21 @@ mod_summary_server <- function(id, file_input) {
       
       if (!is.null(file_input())) {
         
-        react_var$input_data <- readxl::read_excel(path = file_input()$datapath)
+        react_var$input_data_tmp <- readxl::read_excel(path = file_input()$datapath)
         
       } else {
         
-        react_var$input_data <- construct_data()
+        react_var$input_data_tmp <- construct_data()
+        
+      }
+      
+      if (!is.null(input$switch_na_to_zero)) {
+        
+        react_var$input_data <- convert_na_to_zero(data = react_var$input_data_tmp)
+        
+      } else {
+        
+        react_var$input_data <- react_var$input_data_tmp
         
       }
       

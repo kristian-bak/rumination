@@ -37,7 +37,8 @@ get_plot_data <- function(data, var_names) {
       neg_mind = mean(neg_mind), 
       pos_mind = mean(pos_mind), 
       old_strategy = mean(old_strategy), 
-      new_strategy = mean(new_strategy))
+      new_strategy = mean(new_strategy)
+    )
   
   if ("Deltager" %notin% var_names) {
     out <- out %>% 
@@ -97,5 +98,3 @@ plot_question <- function(data = construct_data(p = 17),
     plotly::layout(yaxis = list(title = str_question))
   
 }
-
-

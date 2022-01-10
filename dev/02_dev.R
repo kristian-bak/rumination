@@ -21,6 +21,7 @@ usethis::use_package("dplyr")
 usethis::use_package("xlsx")
 usethis::use_package("shinydashboard")
 usethis::use_package("readxl")
+usethis::use_package("shinyWidgets")
 
 ## Add modules ----
 ## Create a module infrastructure in R/
@@ -51,7 +52,15 @@ usethis::use_data_raw( name = "my_dataset", open = FALSE )
 
 ## Tests ----
 ## Add one line by test you want to create
-usethis::use_test( "app" )
+usethis::use_test("app")
+
+## Run tests
+devtools::test()
+
+## Run test coverage
+devtools:::test_coverage()
+
+devtools::check()
 
 # Documentation
 

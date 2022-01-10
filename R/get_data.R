@@ -131,9 +131,12 @@ get_random_data <- function(data, trend, p) {
 }
 
 #' Construct data
+#' @param seed seed
 #' @return tibble with columns Deltager, Uge and simulated answers for predictors 1:17
 #' @export
-construct_data <- function() {
+construct_data <- function(seed = 1) {
+  
+  set.seed(seed)
   
   data <- tibble::tibble(
     Deltager = rep(1:10, each = 8) %>% as.factor(), 

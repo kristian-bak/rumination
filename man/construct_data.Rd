@@ -4,7 +4,10 @@
 \alias{construct_data}
 \title{Construct data}
 \usage{
-construct_data()
+construct_data(seed = 1)
+}
+\arguments{
+\item{seed}{seed}
 }
 \value{
 tibble with columns Deltager, Uge and simulated answers for predictors 1:17
