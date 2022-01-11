@@ -68,11 +68,26 @@ mod_summary_server <- function(id, file_input) {
     
     react_var <- reactiveValues()
     
+    ## This ensures that select input is not reset when ticking input box
+    observe({
+      react_var$previous_selected_patient <- input$select_patient
+    })
+    
     observe({
       
       if (!is.null(file_input())) {
         
         react_var$input_data_tmp <- readxl::read_excel(path = file_input()$datapath)
+        
+        all_patients <- c(react_var$input_data$Deltager %>% unique(), 
+                          "Gennemsnit", "Alle")
+        
+        updateSelectInput(
+          session = session, 
+          inputId = "select_patient", 
+          choices = all_patients, 
+          selected = react_var$previous_selected_patient
+        )
         
       } else {
         

@@ -66,7 +66,10 @@ plot_question <- function(data = construct_data(p = 17),
   
   y_var <- map_question(x = str_question)
   
-  vec_patients <- 1:10 %>% as.character()
+  vec_patients <- data %>% 
+    dplyr::pull(Deltager) %>% 
+    unique() %>% 
+    as.character()
   
   if (str_patient %in% c("Alle", "Gennemsnit")) { ## If "Alle" or "Gennemsnit" is desired
                                                   ## all data is needed to plot questions    
@@ -84,6 +87,10 @@ plot_question <- function(data = construct_data(p = 17),
       dplyr::filter(Deltager == str_patient) ## then only Uge is needed to group by
     var_names <- "Uge"
     
+  }
+  
+  if (!exists("input_plot_data")) {
+    return()
   }
   
   output_plot_data <- get_plot_data(data = input_plot_data, var_names = var_names)

@@ -5,7 +5,7 @@ account: kwa-z
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 4700759
-bundleId: 5453343
+bundleId: 5457181
 url: https://k-bak.shinyapps.io/rumination/
-when: 1641844682.64746
-lastSyncTime: 1641844682.64746
+when: 1641927908.02682
+lastSyncTime: 1641927908.02682
