@@ -23,6 +23,13 @@ map_question <- function(x) {
 #' 
 get_plot_data <- function(data, var_names) {
   
+  if (nrow(na.omit(data)) != nrow(data)) {
+    #browser()
+  }
+  
+  n_questions <- 17
+  questions <- paste0("Spørgsmål_", 1:n_questions)
+  
   data <- data %>% 
     dplyr::mutate(
       neg_mind = (Spørgsmål_2 + Spørgsmål_3 + Spørgsmål_4 + Spørgsmål_5) / 4, 
@@ -102,6 +109,6 @@ plot_question <- function(data = construct_data(p = 17),
       type = "scatter", 
       mode = "lines", 
       color = ~Deltager) %>% 
-    plotly::layout(yaxis = list(title = str_question))
+    plotly::layout(yaxis = list(title = str_question, range = c(0, 10)), xaxis = list(range = c(1, 14)))
   
 }

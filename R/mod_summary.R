@@ -28,13 +28,13 @@ mod_summary_ui <- function(id){
              )
       ), 
       column(3, 
-             shinyWidgets::awesomeCheckboxGroup(
-               inputId = ns("switch_na_to_zero"), 
-               label = "Erstat blanke celler med 0", 
-               choices = c("Ja"), 
-               selected = "Ja", 
-               inline = TRUE, 
-               status = "primary" 
+             shiny::radioButtons(
+               inputId = ns("switch_na"), 
+               label = "Datahåndtering", 
+               choices = list("Ingen databehandling" = 0, 
+                              "Erstat blanke celler med forrige værdi" = 1,
+                              "Erstat blanke celler med regressionslinje" = 2), 
+               selected = 0
              ), 
              style = "display:inline-block; float:left"
       )
@@ -73,13 +73,26 @@ mod_summary_server <- function(id, file_input) {
       react_var$previous_selected_patient <- input$select_patient
     })
     
+    react_input_data <- reactive({
+      
+      if (is.null(file_input())) {
+        return(data.frame())
+      }
+      
+      readxl::read_excel(path = file_input()$datapath)
+      
+    })
+    
+    react_plot_data <- reactive({
+      react_input_data() %>% 
+        prep_cols(option = input$switch_na)
+    })
+    
     observe({
       
       if (!is.null(file_input())) {
         
-        react_var$input_data_tmp <- readxl::read_excel(path = file_input()$datapath)
-        
-        all_patients <- c(react_var$input_data$Deltager %>% unique(), 
+        all_patients <- c(react_input_data() %>% dplyr::pull(Deltager) %>% unique(), 
                           "Gennemsnit", "Alle")
         
         updateSelectInput(
@@ -95,27 +108,16 @@ mod_summary_server <- function(id, file_input) {
         
       }
       
-      if (!is.null(input$switch_na_to_zero)) {
-        
-        react_var$input_data <- convert_na_to_zero(data = react_var$input_data_tmp)
-        
-      } else {
-        
-        react_var$input_data <- react_var$input_data_tmp
-        
-      }
-      
-      var_questions <- paste0("Spørgsmål_", 1:17)
-      
-      react_var$data_to_download <- react_var$input_data %>% 
-        dplyr::select(c("Deltager", "Uge", var_questions))
-      
     })
     
     output$plot_summary <- plotly::renderPlotly({
       
+      if (nrow(react_plot_data()) == 0) {
+        return()
+      }
+      
       plot_question(
-        data = react_var$input_data, 
+        data = react_plot_data(), 
         str_question = input$select_question, 
         str_patient = input$select_patient
       )

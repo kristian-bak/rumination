@@ -10,3 +10,7 @@ golem::document_and_reload()
 
 # Run the application
 run_app()
+
+usethis::use_version()
+
+usethis::use_news_md()

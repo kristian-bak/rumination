@@ -1,11 +1,9 @@
-#' Convert NA to zero
+#' Replace NA with zero
 #' @param data data.frame
 #' 
-convert_na_to_zero <- function(data) {
+replace_na_with_zero <- function(data) {
   
   num_col <- sapply(data, is.numeric)
-  
-  data[, num_col]
   
   from_na_to_zero <- function(x) {
     

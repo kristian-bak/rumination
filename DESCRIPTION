@@ -1,6 +1,6 @@
 Package: rumination
 Title: An Amazing Shiny App
-Version: 1.3.0
+Version: 1.4.1
 Authors@R: 
     person(given = "firstname",
            family = "lastname",
