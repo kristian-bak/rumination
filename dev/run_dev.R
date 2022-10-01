@@ -11,6 +11,7 @@ golem::document_and_reload()
 # Run the application
 run_app()
 
+## Bump version
 usethis::use_version()
 
 usethis::use_news_md()

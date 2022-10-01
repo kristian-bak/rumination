@@ -124,13 +124,21 @@ mod_summary_server <- function(id, file_input) {
 
     })
     
+    react_data_to_download <- reactive({
+      
+      var_questions <- paste0("Spørgsmål_", 1:17)
+      
+      react_plot_data() %>% 
+        dplyr::select(c("Deltager", "Uge", var_questions))
+    })
+    
     output$download_data <- download_excel(
-      data = react_var$data_to_download, 
+      data = react_data_to_download(), 
       file_name = "Rumination.xlsx"
     )
     
     output$download_template <- download_excel(
-      data = create_template(data = react_var$data_to_download), 
+      data = create_template(data = react_data_to_download()), 
       file_name = "Rumination.xlsx"
     )
  
