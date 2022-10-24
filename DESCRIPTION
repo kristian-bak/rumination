@@ -15,10 +15,12 @@ Imports:
     magrittr,
     pkgload,
     plotly,
+    purrr,
     readxl,
     shiny (>= 1.6.0),
     shinydashboard,
     shinyWidgets,
+    tidyr,
     xlsx
 Encoding: UTF-8
 LazyData: true

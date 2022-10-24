@@ -1,5 +1,7 @@
 # rumination 1.5.1
 
+* Tilføjer modal for at illustrere ventetid
+
 # rumination 1.5.0
 
 * Tilføjer download knap til alle plots

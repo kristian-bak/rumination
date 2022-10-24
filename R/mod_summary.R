@@ -162,6 +162,8 @@ mod_summary_server <- function(id, file_input) {
         temp_directory <- file.path(tempdir(), as.integer(Sys.time()))
         dir.create(temp_directory)
         
+        showModal(modalDialog("Gemmer plots...", footer = "Det kan tage ca. 10 sekunder."))
+        
         reactiveValuesToList(plots_to_download()) %>%
           purrr::imap(function(x,y){
             if(!is.null(x)){
@@ -176,7 +178,7 @@ mod_summary_server <- function(id, file_input) {
           root = temp_directory
         )
         
-        
+        on.exit(removeModal())
         
       },
       contentType = "application/zip"

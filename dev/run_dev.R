@@ -21,3 +21,6 @@ devtools::load_all()
 usethis::use_version()
 
 usethis::use_news_md()
+
+usethis::use_package("purrr")
+usethis::use_package("tidyr")
