@@ -62,6 +62,7 @@ get_plot_data <- function(data, var_names) {
 #' ("neg_mind", "pos_mind", "old_strategy" or "new_strategy")
 #' @param str_patient string specifying which patient (= Deltager) to extract
 #' "1", "2", ..., "10", "Gennemsnit" or "Alle")
+#' @param plotly logical indicating if plotly or ggplotly shoud be returned
 #' @export
 #' @return plotly object
 #' @examples data <- construct_data(p = 17)
@@ -69,7 +70,7 @@ get_plot_data <- function(data, var_names) {
 #' 
 plot_question <- function(data = construct_data(p = 17), 
                           str_question = "neg_mind", 
-                          str_patient = "1") {
+                          str_patient = "1", plotly = TRUE) {
   
   y_var <- map_question(x = str_question)
   
@@ -102,13 +103,31 @@ plot_question <- function(data = construct_data(p = 17),
   
   output_plot_data <- get_plot_data(data = input_plot_data, var_names = var_names)
   
-  output_plot_data %>% 
-    plotly::plot_ly(
-      x = ~Uge, 
-      y = ~get(y_var), 
-      type = "scatter", 
-      mode = "lines", 
-      color = ~Deltager) %>% 
-    plotly::layout(yaxis = list(title = str_question, range = c(0, 10)), xaxis = list(range = c(1, 14)))
+  #output_plot_data %>% 
+  #  plotly::plot_ly(
+  #    x = ~Uge, 
+  #    y = ~get(y_var), 
+  #    type = "scatter", 
+  #    mode = "lines", 
+  #    color = ~Deltager) %>% 
+  #  plotly::layout(yaxis = list(title = str_question, range = c(0, 10)), xaxis = list(range = c(1, 14)))
+  
+  if ("Deltager" %in% var_names) {
+    fig <- ggplot2::ggplot(data = output_plot_data, ggplot2::aes(x = Uge, y = get(y_var), color = Deltager))
+  } else {
+    fig <- ggplot2::ggplot(data = output_plot_data, ggplot2::aes(x = Uge, y = get(y_var)))
+  }
+  
+  fig <- fig + 
+    ggplot2::geom_line() + 
+    ggplot2::xlim(c(0, 14)) + 
+    ggplot2::ylim(c(0, 10)) + 
+    ggplot2::ylab(str_question)
+  
+  if (plotly) {
+    fig <- plotly::ggplotly(fig)
+  }
+  
+  return(fig)
   
 }

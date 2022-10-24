@@ -7,7 +7,8 @@
 plot_question(
   data = construct_data(p = 17),
   str_question = "neg_mind",
-  str_patient = "1"
+  str_patient = "1",
+  plotly = TRUE
 )
 }
 \arguments{
@@ -18,6 +19,8 @@ plot_question(
 
 \item{str_patient}{string specifying which patient (= Deltager) to extract
 "1", "2", ..., "10", "Gennemsnit" or "Alle")}
+
+\item{plotly}{logical indicating if plotly or ggplotly shoud be returned}
 }
 \value{
 plotly object

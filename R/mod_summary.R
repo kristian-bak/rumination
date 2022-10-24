@@ -54,7 +54,12 @@ mod_summary_ui <- function(id){
              downloadButton(
                outputId = ns("download_template"), 
                label = "Download skabelon")
-             )
+             ),
+      column(2, 
+             downloadButton(
+               outputId = ns("download_plots"), 
+               label = "Download plots")
+      )
     )
   )
 }
@@ -75,11 +80,7 @@ mod_summary_server <- function(id, file_input) {
     
     react_input_data <- reactive({
       
-      if (is.null(file_input())) {
-        return(data.frame())
-      }
-      
-      readxl::read_excel(path = file_input()$datapath)
+      read_data(path = file_input()$datapath)
       
     })
     
@@ -140,6 +141,46 @@ mod_summary_server <- function(id, file_input) {
     output$download_template <- download_excel(
       data = create_template(data = react_data_to_download()), 
       file_name = "Rumination.xlsx"
+    )
+    
+    plots_to_download <- reactive({
+      
+      l <- get_plots_as_list(data = react_plot_data())
+      
+      react_val <- rv <- do.call("reactiveValues", l)
+      
+      return(react_val)
+      
+    })
+    
+    output$download_plots <- downloadHandler(
+      filename = function(){
+        paste("plots_", Sys.Date(), ".zip", sep = "")
+      },
+      content = function(file){
+        
+        temp_directory <- file.path(tempdir(), as.integer(Sys.time()))
+        dir.create(temp_directory)
+        
+        reactiveValuesToList(plots_to_download()) %>%
+          purrr::imap(function(x,y){
+            if(!is.null(x)){
+              file_name <- glue::glue("{y}.png")
+              save_plot(x = x, file_path = file.path(temp_directory, file_name))
+            }
+          })
+    
+        zip::zip(
+          zipfile = file,
+          files = dir(temp_directory),
+          root = temp_directory
+        )
+        
+        
+        
+      },
+      contentType = "application/zip"
+      
     )
  
   })

@@ -11,6 +11,12 @@ golem::document_and_reload()
 # Run the application
 run_app()
 
+## Document
+devtools::document()
+
+## Load all functions
+devtools::load_all()
+
 ## Bump version
 usethis::use_version()
 
