@@ -1,3 +1,5 @@
+# rumination 1.5.1
+
 # rumination 1.5.0
 
 * Tilføjer download knap til alle plots
